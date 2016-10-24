@@ -18,6 +18,7 @@ public class DayViewFacade {
     private Drawable selectionDrawable = null;
     private final LinkedList<Span> spans = new LinkedList<>();
     private boolean daysDisabled = false;
+    private boolean daysActivated = false;
 
     DayViewFacade() {
         isDecorated = false;
@@ -74,6 +75,11 @@ public class DayViewFacade {
         this.isDecorated = true;
     }
 
+    public void setDaysActivated(boolean daysActivated) {
+        this.daysActivated = daysDisabled;
+        this.isDecorated = true;
+    }
+
     void reset() {
         backgroundDrawable = null;
         selectionDrawable = null;
@@ -97,6 +103,7 @@ public class DayViewFacade {
         other.spans.addAll(spans);
         other.isDecorated |= this.isDecorated;
         other.daysDisabled = daysDisabled;
+        other.daysActivated = daysActivated;
     }
 
     boolean isDecorated() {
@@ -122,6 +129,10 @@ public class DayViewFacade {
      */
     public boolean areDaysDisabled() {
         return daysDisabled;
+    }
+
+    public boolean areDaysActivated() {
+        return daysActivated;
     }
 
     static class Span {

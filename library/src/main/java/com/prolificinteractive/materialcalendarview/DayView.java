@@ -16,6 +16,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -183,6 +184,7 @@ class DayView extends CheckedTextView {
 
     private void regenerateBackground() {
         if (selectionDrawable != null) {
+//            Log.i("Wenhui", selectionDrawable.toString());
             setBackgroundDrawable(selectionDrawable);
         } else {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);
@@ -236,6 +238,7 @@ class DayView extends CheckedTextView {
     void applyFacade(DayViewFacade facade) {
         this.isDecoratedDisabled = facade.areDaysDisabled();
         setEnabled();
+        setActivated(facade.areDaysActivated());
 
         setCustomBackground(facade.getBackgroundDrawable());
         setSelectionDrawable(facade.getSelectionDrawable());

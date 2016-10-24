@@ -13,6 +13,7 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +39,17 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
 
         widget.setOnDateChangedListener(this);
         widget.setOnMonthChangedListener(this);
+
+        Calendar instance1 = Calendar.getInstance();
+        instance1.set(instance1.get(Calendar.YEAR), Calendar.JANUARY, 5);
+
+        Calendar instance2 = Calendar.getInstance();
+        instance2.set(instance2.get(Calendar.YEAR), Calendar.NOVEMBER, 20);
+        widget.state()
+                .edit()
+                .setMinimumDate(instance1.getTime())
+                .setMaximumDate(instance2.getTime())
+                .commit();
 
         //Setup initial text
         textView.setText(getSelectedDatesString());

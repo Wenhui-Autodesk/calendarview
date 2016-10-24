@@ -1,8 +1,8 @@
 package com.prolificinteractive.materialcalendarview.sample.decorators;
 
-import android.graphics.Typeface;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -12,14 +12,16 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import java.util.Date;
 
 /**
- * Decorate a day by making the text big and bold
+ * Created by wenhulin on 10/21/16.
  */
-public class OneDayDecorator implements DayViewDecorator {
 
+public class DemoMileStoneActiveDecorator implements DayViewDecorator {
     private CalendarDay date;
+    private Context mContext;
 
-    public OneDayDecorator() {
-        date = CalendarDay.today();
+
+    public DemoMileStoneActiveDecorator(Activity context) {
+        mContext = context;
     }
 
     @Override
@@ -29,8 +31,7 @@ public class OneDayDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-//        view.addSpan(new StyleSpan(Typeface.BOLD));
-//        view.addSpan(new RelativeSizeSpan(1.0f));
+        view.setBackgroundDrawable(new ColorDrawable(mContext.getResources().getColor(android.R.color.holo_blue_light)));
     }
 
     /**

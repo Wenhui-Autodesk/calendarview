@@ -2,6 +2,7 @@ package com.prolificinteractive.materialcalendarview;
 
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -177,11 +178,14 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         final DayViewFacade facadeAccumulator = new DayViewFacade();
         for (DayView dayView : dayViews) {
             facadeAccumulator.reset();
+            Log.i("Wenhui", "dayView isChecked=" + dayView.isChecked());
             for (DecoratorResult result : decoratorResults) {
                 if (result.decorator.shouldDecorate(dayView.getDate())) {
+                    Log.i("Wenhui", "" + result.decorator.getClass().getSimpleName() + "=" + dayView.getLabel());
                     result.result.applyTo(facadeAccumulator);
                 }
             }
+//            dayView.setActivated(true);
             dayView.applyFacade(facadeAccumulator);
         }
     }
