@@ -40,8 +40,8 @@ public class MySample extends AppCompatActivity implements OnDateSelectedListene
     @Bind(R.id.calendarView)
     MaterialCalendarView widget;
 
-    @Bind(R.id.textView)
-    TextView textView;
+//    @Bind(R.id.textView)
+//    TextView textView;
 
     private DemoTaskNodeDecorator mDemoDecorator;
     private DemoMileStoneNodeDecorator mDemoMileStoneDecorator;
@@ -98,10 +98,10 @@ public class MySample extends AppCompatActivity implements OnDateSelectedListene
 
 
         Calendar instance1 = Calendar.getInstance();
-        instance1.set(instance1.get(Calendar.YEAR), Calendar.JANUARY, 5);
+        instance1.set(instance1.get(Calendar.YEAR), Calendar.OCTOBER, 1);
 
         Calendar instance2 = Calendar.getInstance();
-        instance2.set(instance2.get(Calendar.YEAR), Calendar.NOVEMBER, 20);
+        instance2.set(instance2.get(Calendar.YEAR), Calendar.DECEMBER, 31);
         widget.state()
                 .edit()
                 .setMinimumDate(instance1.getTime())
@@ -109,14 +109,14 @@ public class MySample extends AppCompatActivity implements OnDateSelectedListene
                 .commit();
 
         //Setup initial text
-        textView.setText(getSelectedDatesString());
+//        textView.setText(getSelectedDatesString());
 
     }
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date, boolean selected) {
-        textView.setText(getSelectedDatesString());
-        Log.i("Wenhui", "onDateSelected");
+//        textView.setText(getSelectedDatesString());
+        Log.i("Wenhui", "onDateSelected" + getSelectedDatesString());
 
         if (mDemoDecorator != null) {
             mDemoDecorator.setDates(widget.getSelectedDates());
@@ -175,7 +175,7 @@ public class MySample extends AppCompatActivity implements OnDateSelectedListene
 
     @Override
     public void onRangeSelected(@NonNull MaterialCalendarView widget, @NonNull List<CalendarDay> dates) {
-        textView.setText(dates.size() + " days selected");
+//        textView.setText(dates.size() + " days selected");
         if (mDemoDecorator != null) {
             mDemoDecorator.setDates(widget.getSelectedDates());
             widget.invalidateDecorators();

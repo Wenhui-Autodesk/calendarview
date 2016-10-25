@@ -22,8 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
@@ -65,6 +67,9 @@ import java.util.List;
  * </p>
  */
 public class MaterialCalendarView extends ViewGroup {
+
+    public static final int CALENDAR_DIRECTION_LANDSCAPE = 0;
+    public static final int CALENDAR_DIRECTION_VERTICAL = 1;
 
     /**
      * {@linkplain IntDef} annotation for selection mode.
@@ -164,6 +169,7 @@ public class MaterialCalendarView extends ViewGroup {
     private final DirectionButton buttonFuture;
     private final CalendarPager pager;
     private CalendarPagerAdapter<?> adapter;
+    private ListViewAdapter mListAdapter;
     private CalendarDay currentMonth;
     private LinearLayout topbar;
     private CalendarMode calendarMode;
@@ -369,7 +375,7 @@ public class MaterialCalendarView extends ViewGroup {
 
         // Adapter is created while parsing the TypedArray attrs, so setup has to happen after
         adapter.setTitleFormatter(DEFAULT_TITLE_FORMATTER);
-        setupChildren();
+        setupChildren2();
 
         currentMonth = CalendarDay.today();
         setCurrentDate(currentMonth);
@@ -408,6 +414,58 @@ public class MaterialCalendarView extends ViewGroup {
         pager.setId(R.id.mcv_pager);
         pager.setOffscreenPageLimit(1);
         addView(pager, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+    }
+
+    private void setupChildren2() {
+        topbar = new LinearLayout(getContext());
+        topbar.setOrientation(LinearLayout.HORIZONTAL);
+        topbar.setClipChildren(false);
+        topbar.setClipToPadding(false);
+//        addView(topbar, new LayoutParams(1));
+
+        buttonPast.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        buttonPast.setImageResource(R.drawable.mcv_action_previous);
+        topbar.addView(buttonPast, new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
+
+        title.setGravity(Gravity.CENTER);
+        topbar.addView(title, new LinearLayout.LayoutParams(
+                0, LayoutParams.MATCH_PARENT, DEFAULT_DAYS_IN_WEEK - 2
+        ));
+
+        buttonFuture.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        buttonFuture.setImageResource(R.drawable.mcv_action_next);
+        topbar.addView(buttonFuture, new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
+
+        pager.setId(R.id.mcv_pager);
+        pager.setOffscreenPageLimit(1);
+//        addView(pager, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+
+        removeView(pager);
+        ListView listView = new ListView(getContext());
+        listView.setId(R.id.mcv_list);
+        mListAdapter = new ListViewAdapter(this);
+        listView.setAdapter(mListAdapter);
+//        addView(listView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        addView(listView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+
+//
+//        MonthView monthView = new MonthView(this, currentMonth, getFirstDayOfWeek());
+//        monthView.setSelectionColor(getSelectionColor());
+//        monthView.setDateTextAppearance(adapter.getDateTextAppearance());
+//        monthView.setWeekDayTextAppearance(adapter.getWeekDayTextAppearance());
+//        monthView.setShowOtherDates(getShowOtherDates());
+//        addView(monthView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+//
+//        MonthView monthView2 = new MonthView(this, currentMonth, getFirstDayOfWeek());
+//        monthView2.setSelectionColor(getSelectionColor());
+//        monthView2.setDateTextAppearance(adapter.getDateTextAppearance());
+//        monthView2.setWeekDayTextAppearance(adapter.getWeekDayTextAppearance());
+//        monthView2.setShowOtherDates(getShowOtherDates());
+//        addView(monthView2, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+    }
+
+    private void getAdapter() {
+
     }
 
     private void updateUi() {
@@ -458,6 +516,7 @@ public class MaterialCalendarView extends ViewGroup {
         }
 
         adapter.setSelectionEnabled(selectionMode != SELECTION_MODE_NONE);
+        mListAdapter.setSelectionEnabled(selectionMode != SELECTION_MODE_NONE);
     }
 
     /**
@@ -602,7 +661,8 @@ public class MaterialCalendarView extends ViewGroup {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return pager.dispatchTouchEvent(event);
+        return super.onTouchEvent(event);
+//        return pager.dispatchTouchEvent(event);
     }
 
     /**
@@ -634,6 +694,7 @@ public class MaterialCalendarView extends ViewGroup {
         }
         accentColor = color;
         adapter.setSelectionColor(color);
+        mListAdapter.setSelectionColor(color);
         invalidate();
     }
 
@@ -751,7 +812,7 @@ public class MaterialCalendarView extends ViewGroup {
      * will return the last selected date
      */
     public CalendarDay getSelectedDate() {
-        List<CalendarDay> dates = adapter.getSelectedDates();
+        List<CalendarDay> dates = mListAdapter.getSelectedDates();//adapter.getSelectedDates();
         if (dates.isEmpty()) {
             return null;
         } else {
@@ -764,7 +825,7 @@ public class MaterialCalendarView extends ViewGroup {
      */
     @NonNull
     public List<CalendarDay> getSelectedDates() {
-        return adapter.getSelectedDates();
+        return mListAdapter.getSelectedDates(); //adapter.getSelectedDates();
     }
 
     /**
@@ -773,6 +834,7 @@ public class MaterialCalendarView extends ViewGroup {
     public void clearSelection() {
         List<CalendarDay> dates = getSelectedDates();
         adapter.clearSelections();
+        mListAdapter.clearSelections();
         for (CalendarDay day : dates) {
             dispatchOnDateSelected(day, false);
         }
@@ -827,6 +889,7 @@ public class MaterialCalendarView extends ViewGroup {
             return;
         }
         adapter.setDateSelected(day, selected);
+        mListAdapter.setDateSelected(day, selected);
     }
 
     /**
@@ -867,6 +930,7 @@ public class MaterialCalendarView extends ViewGroup {
         }
         int index = adapter.getIndexForDay(day);
         pager.setCurrentItem(index, useSmoothScroll);
+        mListAdapter.setCurrentItem(index, useSmoothScroll);
         updateUi();
     }
 
@@ -928,6 +992,7 @@ public class MaterialCalendarView extends ViewGroup {
      */
     public void setDayFormatter(DayFormatter formatter) {
         adapter.setDayFormatter(formatter == null ? DayFormatter.DEFAULT : formatter);
+        mListAdapter.setDayFormatter(formatter == null ? DayFormatter.DEFAULT : formatter);
     }
 
     /**
@@ -1094,6 +1159,7 @@ public class MaterialCalendarView extends ViewGroup {
     private void setRangeDates(CalendarDay min, CalendarDay max) {
         CalendarDay c = currentMonth;
         adapter.setRangeDates(min, max);
+        mListAdapter.setRangeDates(min, max);
         currentMonth = c;
         if (min != null) {
             currentMonth = min.isAfter(currentMonth) ? min : currentMonth;
@@ -1118,6 +1184,7 @@ public class MaterialCalendarView extends ViewGroup {
         int tileHeightPx = -1;
         boolean topbarVisible = true;
         int selectionMode = SELECTION_MODE_SINGLE;
+        int viewDirection = CALENDAR_DIRECTION_VERTICAL;
         boolean dynamicHeightEnabled = false;
         CalendarMode calendarMode = CalendarMode.MONTHS;
         CalendarDay currentMonth = null;
@@ -1233,6 +1300,7 @@ public class MaterialCalendarView extends ViewGroup {
 
         dayViewDecorators.addAll(decorators);
         adapter.setDecorators(dayViewDecorators);
+        mListAdapter.setDecorators(dayViewDecorators);
     }
 
     /**
@@ -1255,6 +1323,7 @@ public class MaterialCalendarView extends ViewGroup {
         }
         dayViewDecorators.add(decorator);
         adapter.setDecorators(dayViewDecorators);
+        mListAdapter.setDecorators(dayViewDecorators);
     }
 
     /**
@@ -1263,6 +1332,7 @@ public class MaterialCalendarView extends ViewGroup {
     public void removeDecorators() {
         dayViewDecorators.clear();
         adapter.setDecorators(dayViewDecorators);
+        mListAdapter.setDecorators(dayViewDecorators);
     }
 
     /**
@@ -1273,6 +1343,7 @@ public class MaterialCalendarView extends ViewGroup {
     public void removeDecorator(DayViewDecorator decorator) {
         dayViewDecorators.remove(decorator);
         adapter.setDecorators(dayViewDecorators);
+        mListAdapter.setDecorators(dayViewDecorators);
     }
 
     /**
@@ -1281,6 +1352,7 @@ public class MaterialCalendarView extends ViewGroup {
      */
     public void invalidateDecorators() {
         adapter.invalidateDecorators();
+        mListAdapter.invalidateDecorators();
     }
 
     /*
@@ -1346,6 +1418,7 @@ public class MaterialCalendarView extends ViewGroup {
         while (counter.before(end) || counter.equals(end)) {
             final CalendarDay current = CalendarDay.from(counter);
             adapter.setDateSelected(current, true);
+            mListAdapter.setDateSelected(current, true);
             days.add(current);
             counter.add(Calendar.DATE, 1);
         }
@@ -1383,27 +1456,28 @@ public class MaterialCalendarView extends ViewGroup {
             break;
             case SELECTION_MODE_RANGE: {
                 adapter.setDateSelected(date, nowSelected);
-                if (adapter.getSelectedDates().size() > 2) {
-                    adapter.clearSelections();
-                    adapter.setDateSelected(date, nowSelected);  //  re-set because adapter has been cleared
+                mListAdapter.setDateSelected(date, nowSelected);
+                if (mListAdapter.getSelectedDates().size() > 2) {
+                    mListAdapter.clearSelections();
+                    mListAdapter.setDateSelected(date, nowSelected);  //  re-set because adapter has been cleared
                     dispatchOnDateSelected(date, nowSelected);
-                } else if (adapter.getSelectedDates().size() == 2) {
-                    final List<CalendarDay> dates = adapter.getSelectedDates();
+                } else if (mListAdapter.getSelectedDates().size() == 2) {
+                    final List<CalendarDay> dates = mListAdapter.getSelectedDates();
                     if (dates.get(0).isAfter(dates.get(1))) {
                         dispatchOnRangeSelected(dates.get(1), dates.get(0));
                     } else {
                         dispatchOnRangeSelected(dates.get(0), dates.get(1));
                     }
                 } else {
-                    adapter.setDateSelected(date, nowSelected);
+                    mListAdapter.setDateSelected(date, nowSelected);
                     dispatchOnDateSelected(date, nowSelected);
                 }
             }
             break;
             default:
             case SELECTION_MODE_SINGLE: {
-                adapter.clearSelections();
-                adapter.setDateSelected(date, true);
+                mListAdapter.clearSelections();
+                mListAdapter.setDateSelected(date, true);
                 dispatchOnDateSelected(date, true);
             }
             break;
@@ -1535,7 +1609,7 @@ public class MaterialCalendarView extends ViewGroup {
         } else if (specWidthMode == MeasureSpec.EXACTLY) {
             if (specHeightMode == MeasureSpec.EXACTLY) {
                 //Pick the larger of the two explicit sizes
-                measureTileSize = Math.max(desiredTileWidth, desiredTileHeight);
+                measureTileSize = Math.min(desiredTileWidth, desiredTileHeight);
             } else {
                 //Be the width size the user wants
                 measureTileSize = desiredTileWidth;
@@ -1572,7 +1646,7 @@ public class MaterialCalendarView extends ViewGroup {
         setMeasuredDimension(
                 //We clamp inline because we want to use un-clamped versions on the children
                 clampSize(measuredWidth, widthMeasureSpec),
-                clampSize(measuredHeight, heightMeasureSpec)
+                clampSize(specHeightSize, heightMeasureSpec)
         );
 
         int count = getChildCount();
@@ -1588,7 +1662,8 @@ public class MaterialCalendarView extends ViewGroup {
             );
 
             int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    p.height * measureTileHeight,
+//                    p.height * measureTileHeight,
+                    specHeightSize,
                     MeasureSpec.EXACTLY
             );
 

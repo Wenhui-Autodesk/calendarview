@@ -73,4 +73,9 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         }
         return FORMATTER.format(date.getDate());
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -45,6 +45,18 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                              int firstDayOfWeek) {
         super(view.getContext());
         this.mcv = view;
+//        this.firstViewDay = firstViewDay;
+//        this.firstDayOfWeek = firstDayOfWeek;
+//
+//        setClipChildren(false);
+//        setClipToPadding(false);
+//
+//        buildWeekDays(resetAndGetWorkingCalendar());
+//        buildDayViews(dayViews, resetAndGetWo2rkingCalendar());
+        setData(firstViewDay, firstDayOfWeek);
+    }
+
+    public final void setData(CalendarDay firstViewDay, int firstDayOfWeek) {
         this.firstViewDay = firstViewDay;
         this.firstDayOfWeek = firstDayOfWeek;
 
@@ -227,10 +239,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
         //The spec width should be a correct multiple
         final int measureTileWidth = specWidthSize / DEFAULT_DAYS_IN_WEEK;
-        final int measureTileHeight = specHeightSize / getRows();
+        final int measureTileHeight = measureTileWidth;//specHeightSize / getRows();
 
         //Just use the spec sizes
-        setMeasuredDimension(specWidthSize, specHeightSize);
+        setMeasuredDimension(specWidthSize, specWidthSize);
 
         int count = getChildCount();
 

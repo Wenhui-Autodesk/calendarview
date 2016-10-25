@@ -2,5 +2,6 @@
 <resources>
 
     <item name="mcv_pager" type="id" />
+    <item name="mcv_list" type="id" />
 
 </resources>
