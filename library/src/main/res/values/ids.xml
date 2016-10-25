@@ -3,5 +3,6 @@
 
     <item name="mcv_pager" type="id" />
     <item name="mcv_list" type="id" />
+    <item name="mcv_month_view" type="id" />
 
 </resources>

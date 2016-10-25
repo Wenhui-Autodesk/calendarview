@@ -119,6 +119,10 @@ public class AdapterHelper<V extends CalendarPagerView> {
         }
     }
 
+    public boolean getSelectionEnabled() {
+        return selectionEnabled;
+    }
+
     public void setSelectionColor(int color) {
         this.color = color;
         for (V pagerView : currentViews) {
@@ -308,6 +312,14 @@ public class AdapterHelper<V extends CalendarPagerView> {
 
     public List<DecoratorResult> getDecoratorResult() {
         return decoratorResults;
+    }
+
+    public CalendarDay getMininumDate() {
+        return this.minDate;
+    }
+
+    public CalendarDay getMaximumDate() {
+        return this.maxDate;
     }
 
 

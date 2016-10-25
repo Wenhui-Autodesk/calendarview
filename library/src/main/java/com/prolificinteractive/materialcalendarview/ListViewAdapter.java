@@ -2,11 +2,15 @@ package com.prolificinteractive.materialcalendarview;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.SparseArrayCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
+
+import org.w3c.dom.Text;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,21 +51,36 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewGroup monthContainer;
         MonthView monthView;
 //        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
+            monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
             monthView = new MonthView(mcv, getItem(position), mcv.getFirstDayOfWeek());
+            monthView.setId(R.id.mcv_month_view);
             ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(parent.getWidth(),
                     mcv.getResources().getDimensionPixelSize(R.dimen.month_view_height));
-            layoutParams.bottomMargin = 20;
             monthView.setLayoutParams(layoutParams);
+            monthContainer.addView(monthView);
 //        } else {
-//            monthView = (MonthView) convertView;
-//            monthView.setData(getItem(position), mcv.getFirstDayOfWeek());
+//            monthContainer = (ViewGroup) convertView;
+//            monthView = (MonthView) monthContainer.findViewById(R.id.mcv_month_view);
 //        }
 
+        TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
+        textView.setText("2016年" + (10 + position) + "月");
+
+//        monthView.setData(getItem(position), mcv.getFirstDayOfWeek()); //TODO Do more optimize
+        monthView.setContentDescription(mcv.getCalendarContentDescription());
+        monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
+        monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
+        monthView.setMinimumDate(mAdapterHelper.getMininumDate());
+        monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
+        monthView.setSelectedDates(mAdapterHelper.getSelectedDates());
         monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
         monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
-        return monthView;
+
+        return monthContainer;
     }
 
 

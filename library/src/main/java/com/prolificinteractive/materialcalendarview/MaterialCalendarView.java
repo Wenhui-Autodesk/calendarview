@@ -445,6 +445,7 @@ public class MaterialCalendarView extends ViewGroup {
         listView.setId(R.id.mcv_list);
         mListAdapter = new ListViewAdapter(this);
         listView.setAdapter(mListAdapter);
+        listView.setDivider(null);
 //        addView(listView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(listView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
 
