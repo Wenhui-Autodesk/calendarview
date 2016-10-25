@@ -56,7 +56,7 @@ public class ListViewAdapter extends BaseAdapter {
 //        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
             monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
-            monthView = new MonthView(mcv, getItem(position), mcv.getFirstDayOfWeek(), true);
+            monthView = new MonthView(mcv, getItem(position), mcv.getFirstDayOfWeek(), false);
             monthView.setId(R.id.mcv_month_view);
             ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(parent.getWidth(),
                     mcv.getResources().getDimensionPixelSize(R.dimen.month_view_height));

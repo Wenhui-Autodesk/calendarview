@@ -441,13 +441,23 @@ public class MaterialCalendarView extends ViewGroup {
 //        addView(pager, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
 
         removeView(pager);
+
+        // TODO need to optimize
+        LinearLayout container = new LinearLayout(getContext());
+        container.setOrientation(LinearLayout.VERTICAL);
+
+        WeekNamesView weekNamesView = new WeekNamesView(getContext(), getFirstDayOfWeek());
+        container.addView(weekNamesView, new LayoutParams(60));
+
         ListView listView = new ListView(getContext());
         listView.setId(R.id.mcv_list);
         mListAdapter = new ListViewAdapter(this);
         listView.setAdapter(mListAdapter);
         listView.setDivider(null);
 //        addView(listView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        addView(listView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+//        addView(listView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
+        container.addView(listView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        addView(container, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
 
 //
 //        MonthView monthView = new MonthView(this, currentMonth, getFirstDayOfWeek());
