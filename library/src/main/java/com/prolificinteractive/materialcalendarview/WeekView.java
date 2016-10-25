@@ -34,6 +34,6 @@ public class WeekView extends CalendarPagerView {
 
     @Override
     protected int getRows() {
-        return DAY_NAMES_ROW + 1;
+        return getDayNamesRow() + 1;
     }
 }

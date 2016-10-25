@@ -32,6 +32,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     private final ArrayList<DecoratorResult> decoratorResults = new ArrayList<>();
     @ShowOtherDates
     protected int showOtherDates = SHOW_DEFAULTS;
+    protected boolean showWeekDates = true;
     private MaterialCalendarView mcv;
     private CalendarDay firstViewDay;
     private CalendarDay minDate = null;
@@ -56,6 +57,23 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         setData(firstViewDay, firstDayOfWeek);
     }
 
+    public CalendarPagerView(@NonNull MaterialCalendarView view,
+                             CalendarDay firstViewDay,
+                             int firstDayOfWeek, boolean showWeekDates) {
+        super(view.getContext());
+        this.mcv = view;
+//        this.firstViewDay = firstViewDay;
+//        this.firstDayOfWeek = firstDayOfWeek;
+        this.showWeekDates = showWeekDates;
+//
+//        setClipChildren(false);
+//        setClipToPadding(false);
+//
+//        buildWeekDays(resetAndGetWorkingCalendar());
+//        buildDayViews(dayViews, resetAndGetWo2rkingCalendar());
+        setData(firstViewDay, firstDayOfWeek);
+    }
+
     public final void setData(CalendarDay firstViewDay, int firstDayOfWeek) {
         this.firstViewDay = firstViewDay;
         this.firstDayOfWeek = firstDayOfWeek;
@@ -68,6 +86,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     }
 
     private void buildWeekDays(Calendar calendar) {
+        if (!this.showWeekDates) {
+            return;
+        }
+
         for (int i = 0; i < DEFAULT_DAYS_IN_WEEK; i++) {
             WeekDayView weekDayView = new WeekDayView(getContext(), CalendarUtils.getDayOfWeek(calendar));
             weekDayViews.add(weekDayView);
@@ -105,6 +127,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         return firstDayOfWeek;
     }
 
+    protected int getDayNamesRow() {
+        return (this.showWeekDates ? DAY_NAMES_ROW : 0);
+    }
+
     protected abstract void buildDayViews(Collection<DayView> dayViews, Calendar calendar);
 
     protected abstract boolean isDayEnabled(CalendarDay day);
@@ -132,6 +158,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void setShowOtherDates(@ShowOtherDates int showFlags) {
         this.showOtherDates = showFlags;
         updateUi();
+    }
+
+    public void setShowWeekDays(boolean showWeekDates) {
+        this.showWeekDates = showWeekDates;
     }
 
     public void setSelectionEnabled(boolean selectionEnabled) {

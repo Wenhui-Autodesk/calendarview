@@ -17,6 +17,10 @@ class MonthView extends CalendarPagerView {
         super(view, month, firstDayOfWeek);
     }
 
+    public MonthView(@NonNull MaterialCalendarView view, CalendarDay month, int firstDayOfWeek, boolean showWeekDays) {
+        super(view, month, firstDayOfWeek, showWeekDays);
+    }
+
     @Override
     protected void buildDayViews(Collection<DayView> dayViews, Calendar calendar) {
         for (int r = 0; r < DEFAULT_MAX_WEEKS; r++) {
@@ -37,6 +41,6 @@ class MonthView extends CalendarPagerView {
 
     @Override
     protected int getRows() {
-        return DEFAULT_MAX_WEEKS + DAY_NAMES_ROW;
+        return DEFAULT_MAX_WEEKS + getDayNamesRow();
     }
 }
