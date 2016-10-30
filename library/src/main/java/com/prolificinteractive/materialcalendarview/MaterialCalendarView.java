@@ -377,28 +377,6 @@ public class MaterialCalendarView extends ViewGroup {
         adapter.setSelectionEnabled(selectionMode != SELECTION_MODE_NONE);
     }
 
-//    /**
-//     * Go to previous month or week without using the button {@link #buttonPast}. Should only go to
-//     * previous if {@link #canGoBack()} is true, meaning it's possible to go to the previous month
-//     * or week.
-//     */
-//    public void goToPrevious() {
-//        if (canGoBack()) {
-//            pager.setCurrentItem(pager.getCurrentItem() - 1, true);
-//        }
-//    }
-//
-//    /**
-//     * Go to next month or week without using the button {@link #buttonFuture}. Should only go to
-//     * next if {@link #canGoForward()} is enabled, meaning it's possible to go to the next month or
-//     * week.
-//     */
-//    public void goToNext() {
-//        if (canGoForward()) {
-//            pager.setCurrentItem(pager.getCurrentItem() + 1, true);
-//        }
-//    }
-
     /**
      * Get the current selection mode. The default mode is {@linkplain #SELECTION_MODE_SINGLE}
      *
@@ -554,44 +532,6 @@ public class MaterialCalendarView extends ViewGroup {
         adapter.setSelectionColor(color);
         invalidate();
     }
-//
-//    /**
-//     * @return color used to draw arrows
-//     */
-//    public int getArrowColor() {
-//        return arrowColor;
-//    }
-//
-//    /**
-//     * @param color the new color for the paging arrows
-//     */
-//    public void setArrowColor(int color) {
-//        if (color == 0) {
-//            return;
-//        }
-//        arrowColor = color;
-//        buttonPast.setColor(color);
-//        buttonFuture.setColor(color);
-//        invalidate();
-//    }
-//
-//    /**
-//     * Set content description for button past
-//     *
-//     * @param description String to use as content description
-//     */
-//    public void setContentDescriptionArrowPast(final CharSequence description) {
-//        buttonPast.setContentDescription(description);
-//    }
-//
-//    /**
-//     * Set content description for button future
-//     *
-//     * @param description String to use as content description
-//     */
-//    public void setContentDescriptionArrowFuture(final CharSequence description) {
-//        buttonFuture.setContentDescription(description);
-//    }
 
     /**
      * Set content description for calendar
@@ -612,36 +552,6 @@ public class MaterialCalendarView extends ViewGroup {
                 ? calendarContentDescription
                 : getContext().getString(R.string.calendar);
     }
-
-//    /**
-//     * @return icon used for the left arrow
-//     */
-//    public Drawable getLeftArrowMask() {
-//        return leftArrowMask;
-//    }
-//
-//    /**
-//     * @param icon the new icon to use for the left paging arrow
-//     */
-//    public void setLeftArrowMask(Drawable icon) {
-//        leftArrowMask = icon;
-//        buttonPast.setImageDrawable(icon);
-//    }
-//
-//    /**
-//     * @return icon used for the right arrow
-//     */
-//    public Drawable getRightArrowMask() {
-//        return rightArrowMask;
-//    }
-//
-//    /**
-//     * @param icon the new icon to use for the right paging arrow
-//     */
-//    public void setRightArrowMask(Drawable icon) {
-//        rightArrowMask = icon;
-//        buttonFuture.setImageDrawable(icon);
-//    }
 
     /**
      * @param resourceId The text appearance resource id.
@@ -1004,9 +914,6 @@ public class MaterialCalendarView extends ViewGroup {
         if (min != null) {
             currentMonth = min.isAfter(currentMonth) ? min : currentMonth;
         }
-//        int position = adapter.getIndexForDay(c);
-//        pager.setCurrentItem(position, false);
-//        updateUi();
     }
 
     public static class SavedState extends BaseSavedState {
@@ -1757,7 +1664,6 @@ public class MaterialCalendarView extends ViewGroup {
     }
 
     protected void resetViewHeight() {
-
     }
 
     protected IAdapter createAdapter() {

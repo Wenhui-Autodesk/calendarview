@@ -43,7 +43,7 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
     @Override
     protected void setUpEditView() {
-//        super.setUpEditView();
+        setUpEditView();
     }
 
     @Override
@@ -56,19 +56,13 @@ public class VerticalCalendarView extends MaterialCalendarView {
         topbar.setOrientation(LinearLayout.HORIZONTAL);
         topbar.setClipChildren(false);
         topbar.setClipToPadding(false);
-//        container.addView(topbar, new LayoutParams(1));
-
 
         WeekNamesView weekNamesView = new WeekNamesView(getContext(), getFirstDayOfWeek());
-//        topbar.addView(weekNamesView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
         container.addView(weekNamesView, new LayoutParams(60));
 
         mListView.setId(R.id.mcv_list);
         mListView.setAdapter(mListAdapter);
         mListView.setDivider(null);
-//        addView(listView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//        addView(listView, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
         container.addView(mListView, new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(container, new LayoutParams(calendarMode.visibleWeeksCount + DAY_NAMES_ROW));
     }
@@ -184,12 +178,6 @@ public class VerticalCalendarView extends MaterialCalendarView {
     @Override
     public void setCurrentDate(@Nullable CalendarDay day, boolean useSmoothScroll) {
         // TODO
-//        if (day == null) {
-//            return;
-//        }
-//        int index = adapter.getIndexForDay(day);
-//        pager.setCurrentItem(index, useSmoothScroll);
-//        updateUi();
     }
 
     @Override
