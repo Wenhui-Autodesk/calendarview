@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.showOtherMonths;
 import static java.util.Calendar.DATE;
 
 /**

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Pager adapter backing the calendar view
  */
-abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAdapter {
+abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAdapter implements IAdapter{
 
     private final ArrayDeque<V> currentViews;
 
@@ -313,11 +313,11 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
         return Collections.unmodifiableList(selectedDates);
     }
 
-    protected int getDateTextAppearance() {
+    public int getDateTextAppearance() {
         return dateTextAppearance == null ? 0 : dateTextAppearance;
     }
 
-    protected int getWeekDayTextAppearance() {
+    public int getWeekDayTextAppearance() {
         return weekDayTextAppearance == null ? 0 : weekDayTextAppearance;
     }
 }

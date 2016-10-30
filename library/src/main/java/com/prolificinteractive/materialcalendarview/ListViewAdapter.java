@@ -1,7 +1,7 @@
 package com.prolificinteractive.materialcalendarview;
 
 import android.support.annotation.NonNull;
-import android.support.v4.util.SparseArrayCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter;
 
-import org.w3c.dom.Text;
-
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by wenhulin on 10/24/16.
  */
 
-public class ListViewAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter implements IAdapter{
     private AdapterHelper mAdapterHelper;
     private MaterialCalendarView mcv;
 
@@ -31,11 +30,13 @@ public class ListViewAdapter extends BaseAdapter {
     public void setRangeDates(CalendarDay min, CalendarDay max) {
         mAdapterHelper.setRangeDates(min, max);
         notifyDataSetChanged();
+        Log.i("Wenhui", this + " notifyDataSetChanged");
         mAdapterHelper.invalidateSelectedDates();
     }
 
     @Override
     public int getCount() {
+        Log.i("Wenhui", this + "mAdapterHelper.getCount()=" + mAdapterHelper.getCount());
         return mAdapterHelper.getCount();
     }
 
@@ -89,6 +90,16 @@ public class ListViewAdapter extends BaseAdapter {
         mAdapterHelper.setSelectionColor(color);
     }
 
+    @Override
+    public void setDateTextAppearance(int taId) {
+
+    }
+
+    @Override
+    public void setWeekDayTextAppearance(int resourceId) {
+
+    }
+
     /**
      * Set the currently selected page.
      *
@@ -108,8 +119,38 @@ public class ListViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getIndexForDay(CalendarDay day) {
+        return 0;
+    }
+
+    @Override
+    public int getDateTextAppearance() {
+        return 0;
+    }
+
+    @Override
+    public int getShowOtherDates() {
+        return 0;
+    }
+
+    @Override
+    public int getWeekDayTextAppearance() {
+        return 0;
+    }
+
     public void setDateSelected(CalendarDay day, boolean selected) {
         mAdapterHelper.setDateSelected(day, selected);
+    }
+
+    @Override
+    public void setShowOtherDates(@MaterialCalendarView.ShowOtherDates int showFlags) {
+
+    }
+
+    @Override
+    public void setWeekDayFormatter(WeekDayFormatter formatter) {
+
     }
 
     public void setSelectionEnabled(boolean enabled) {
@@ -123,6 +164,11 @@ public class ListViewAdapter extends BaseAdapter {
     public void setDayFormatter(DayFormatter formatter) {
         mAdapterHelper.setDayFormatter(formatter);
 //        notifyDataSetChanged();
+    }
+
+    @Override
+    public void setTitleFormatter(@NonNull TitleFormatter titleFormatter) {
+
     }
 
     @NonNull

@@ -20,7 +20,6 @@ import java.util.List;
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.SHOW_DEFAULTS;
 import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.showOtherMonths;
 import static java.util.Calendar.DATE;
-import static java.util.Calendar.DAY_OF_WEEK;
 
 abstract class CalendarPagerView extends ViewGroup implements View.OnClickListener {
 
@@ -220,10 +219,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         final DayViewFacade facadeAccumulator = new DayViewFacade();
         for (DayView dayView : dayViews) {
             facadeAccumulator.reset();
-            Log.i("Wenhui", "dayView isChecked=" + dayView.isChecked());
+//            Log.i("Wenhui", "dayView isChecked=" + dayView.isChecked());
             for (DecoratorResult result : decoratorResults) {
                 if (result.decorator.shouldDecorate(dayView.getDate())) {
-                    Log.i("Wenhui", "" + result.decorator.getClass().getSimpleName() + "=" + dayView.getLabel());
+//                    Log.i("Wenhui", "" + result.decorator.getClass().getSimpleName() + "=" + dayView.getLabel());
                     result.result.applyTo(facadeAccumulator);
                 }
             }

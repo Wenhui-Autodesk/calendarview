@@ -14,6 +14,7 @@ import android.widget.NumberPicker;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.HorCalandarView;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.Calendar;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
 public class DynamicSettersActivity extends AppCompatActivity {
 
     @Bind(R.id.calendarView)
-    MaterialCalendarView widget;
+    HorCalandarView widget;
 
     private int currentTileSize;
     private int currentTileWidth;

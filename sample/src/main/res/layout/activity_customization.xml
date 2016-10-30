@@ -11,7 +11,7 @@
     tools:context="com.prolificinteractive.materialcalendarview.sample.CustomizeXmlActivity"
     >
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+    <com.prolificinteractive.materialcalendarview.HorCalandarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import android.util.TypedValue;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.HorCalandarView;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 public class CustomizeCodeActivity extends AppCompatActivity {
 
     @Bind(R.id.calendarView)
-    MaterialCalendarView widget;
+    HorCalandarView widget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,8 +2,7 @@ package com.prolificinteractive.materialcalendarview;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.SparseArrayCompat;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
@@ -256,7 +255,7 @@ public class AdapterHelper<V extends CalendarPagerView> {
         }
 
         rangeIndex = createRangeIndex(min, max);
-
+        Log.i("Wenhui", "rangeIndex=" + rangeIndex.getCount());
     }
 
     protected DateRangeIndex createRangeIndex(CalendarDay min, CalendarDay max) {
